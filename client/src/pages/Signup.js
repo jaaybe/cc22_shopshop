@@ -10,14 +10,18 @@ function Signup(props) {
 
   const handleFormSubmit = async event => {
     event.preventDefault();
-    const mutationResponse = await addUser({
-      variables: {
-        email: formState.email, password: formState.password,
-        firstName: formState.firstName, lastName: formState.lastName
-      }
-    });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
+    if (formState.password.length <= 4) {
+      window.alert("password must be at least 5 characters")
+    } else {
+      const mutationResponse = await addUser({
+        variables: {
+          email: formState.email, password: formState.password,
+          firstName: formState.firstName, lastName: formState.lastName
+        }
+      });
+      const token = mutationResponse.data.addUser.token;
+      Auth.login(token);
+    }
   };
 
   const handleChange = event => {
